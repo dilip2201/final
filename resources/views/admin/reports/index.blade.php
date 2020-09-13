@@ -50,7 +50,8 @@ td, th {
             <!-- /.card -->
          </div>
          <div class="card  card-outline">
-            <div class="card-body">
+          <button class="btn btn-primary generatepdf" style="margin:15px 0px 0px 20px; width: 15%;">Generate PDF</button>
+            <div class="card-body tabledata" id="tabledata" style="width: 100%;">
                <!-- /.card-header -->
                <table id="employee" class="" style="background: #fff;">
                   <thead>
@@ -72,6 +73,7 @@ td, th {
                <!-- /.card-body -->
                <!-- /.card -->
             </div>
+               
          </div>
          <!-- /.col -->
       </div>
@@ -81,7 +83,29 @@ td, th {
 
 @push('script')
 
+<script src="{{ URL::asset('public/dom-to-image.min.js') }}"></script>
+<script src="{{ URL::asset('public/jspdf.min.js') }}"></script>
 <script>
+  $('.generatepdf').click(function () {
+    domtoimage.toPng(document.getElementById('tabledata'))
+        .then(function (blob) {
+
+            var pdf = new jsPDF('p', 'pt', [$('#tabledata').width(), $('#tabledata').height()]);
+
+            pdf.addImage(blob, 'PNG', 0, 0, $('#tabledata').width(), $('#tabledata').height());
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"
+            ];
+
+
+            var d = new Date();
+            var strDate = d.getDate()+'_'+(monthNames[d.getMonth()])+'_'+d.getFullYear();
+
+            pdf.save(strDate+".pdf");
+
+            that.options.api.optionsChanged();
+        });
+});
 function getrecords(){
   $.ajax({
       url: '{{ route("admin.reports.loadpos") }}',
@@ -100,6 +124,10 @@ function getrecords(){
   });
 }
 $(function(){
+  $('.generatepdf').click(function(){
+    var html = $('.tabledata').html();
+    console.log(html);
+  })
   getrecords();
   $('.searchdata').click(function(){
     $('.spinner').html('<i class="fa fa-spinner fa-spin"></i>');

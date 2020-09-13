@@ -83,7 +83,6 @@ class OrderDetailController extends Controller
                         if($customer_type == 'swiggy' && $itemdata->swiggy_select == '1'){
                             $quantity = $quantity/2;                                
                         }
-
                     }
                     
 
@@ -116,6 +115,11 @@ class OrderDetailController extends Controller
                             if($payment_mode == 'swiggy'){
                                 $totalswiggy = $todaystock->swiggy - $finalprice;
                                 $updatetodaypurchase->swiggy = $totalswiggy;
+                            }
+
+                            if($payment_mode == 'other'){
+                                $totalother = $todaystock->other - $finalprice;
+                                $updatetodaypurchase->other = $totalother;
                             }
                             
                             $updatetodaypurchase->total = $total;
@@ -151,6 +155,10 @@ class OrderDetailController extends Controller
                             if($payment_mode == 'swiggy'){
                                 $totalswiggy = 0 - $finalprice;
                                 $newdaytoday->swiggy = $totalswiggy;
+                            }
+                            if($payment_mode == 'other'){
+                                $totalother = 0 - $finalprice;
+                                $newdaytoday->other = $totalother;
                             }
 
                             $total = 0 - $finalprice;

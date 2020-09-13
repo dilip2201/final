@@ -95,6 +95,11 @@ function zomatototal($date){
    $saletotal = StockLog::whereDate('created_at', $date)->sum('zomato');
    return $saletotal;
 }
+function othertotal($date){
+   $date = Carbon::parse($date);
+   $saletotal = StockLog::whereDate('created_at', $date)->sum('other');
+   return $saletotal;
+}
 function zomatototalmonthly($startdate,$enddate){
    $startdate = Carbon::parse($startdate);
     $enddate = Carbon::parse($enddate);

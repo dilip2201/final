@@ -156,5 +156,6 @@
      <br> Paytm : <b> {{ paytmtotal($date) + 0 }}</b>
      <br> Swiggy : <b> {{ swiggytotal($date) + 0 }}</b>
      <br> Zomato : <b> {{ zomatototal($date) + 0 }}</b>
+     <br> Other : <b> {{ othertotal($date) + 0 }}</b>
    </td>
   </tr>

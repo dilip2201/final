@@ -137,6 +137,7 @@
                              <a class="nav-link priceclictoshow @if(!empty($order) && $order->customer_type == 'swiggy')) active @endif" data-type="swiggy" data-toggle="pill" href="#nav-tab-bank" style="font-size: 20px;">
                              <i class="fa fa-tags "></i> Swiggy </a>
                           </li>
+
                        </ul>
                     </div>
                   </div>
@@ -189,6 +190,7 @@
                                         <option value="paytm" @if(!empty($order) && $order->payment_mode == 'paytm')  selected @endif>Paytm</option>
                                         <option value="zomato" @if(!empty($order) && $order->payment_mode == 'zomato')  selected @endif>Zomato</option>
                                         <option value="swiggy" @if(!empty($order) && $order->payment_mode == 'swiggy')  selected @endif>Swiggy</option>
+                                        <option value="other" @if(!empty($order) && $order->payment_mode == 'other')  selected @endif>Other</option>
                                       </select>
                                     
                                    </div>
