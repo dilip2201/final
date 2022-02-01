@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">appInitializer <a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Module file</b>
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>providers: [
+  {
+    provide: APP_INITIALIZER,
+    useFactory: appInitializer,
+    multi: true,
+    deps: [AuthService],
+  }
+]
+
+function appInitializer(authService: AuthService) {
+  return () => {
+    return new Promise((resolve) => {
+      authService.getUserByToken().subscribe().add(resolve);
+    });
+  };
+}
+</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Routing Module file</b>
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>getUserByToken(): Observable<UserModel> {
+    const token = this.getStorage();
+    if (!token) {
+      return of(undefined);
+    } else {
+      this.isLoadingSubject.next(true);
+      return this.http.get(`${this.apiUrl}/user/get-user-by-token`)
+      .pipe(
+        map((user: any) => {
+          if (user) {
+            this.currentUserSubject = new BehaviorSubject<any>(user?.data);
+            this.currentUserRoleSubject = new BehaviorSubject<any>(user?.userrole_data);
+            this.currentUserCompanySubject = new BehaviorSubject<any>(user?.company_data);
+          } else {
+            this.logout();
+          }
+          return user;
+        }),
+        finalize(() => this.isLoadingSubject.next(false))
+      );
+    }
+  }</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

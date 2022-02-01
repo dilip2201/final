@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Get Id from URL <a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component file</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code>clients : any;
+
+getclients(){
+  this.clientservice.getallclient().subscribe((client : any)=>{
+    this.clients = client.data;
+    console.log(client);
+  });
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Service file</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">
+<code>export class ClientService {
+    private apiUrl = environment.apiUrl;
+    constructor(private http : HttpClient){
+
+    }
+    
+    getallclient(){
+        return this.http.get(`${this.apiUrl}/clients/getall`);
+    }
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

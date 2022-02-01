@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Routing <a href="index.html">Back</a></h5>
+
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">HTML file</b><br>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+  <textarea readonly id="sample1" style="width: 100%; float: left; background: #ddd;" rows="2">
+<a routerLink="/url">Go to Url</a>
+</textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+  <textarea readonly id="sample2" style="width: 100%; float: left; background: #ddd;" rows="2">
+<li class="menu-item" routerLinkActive="active"></li>
+</textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Routing Module file</b>
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>[routerLink]="['edit',task._id]"</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Routing Module file</b>
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>export const routes: Routes = [
+{
+  path: '',
+  canActivate: [AuthGuard],
+  canLoad: [AuthGuard],
+  loadChildren: () =>
+    import('./pages/layout.module').then((m) => m.LayoutModule),
+},
+{ path: '**', redirectTo: 'error/404' }</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Navigation Component</b>
+<button  onclick="CopyToClipboard('sample4');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample4" class="preclass">
+<code>import { ActivatedRoute, Router } from '@angular/router';
+constructor(
+private router: Router,
+private route: ActivatedRoute) { }
+
+this.router.navigate(['/navigateurl']);
+</div>
+<!------------------ DIV --------------------------->
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

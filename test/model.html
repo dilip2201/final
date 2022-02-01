@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Bootstrap Model  <a href="index.html">Back</a></h5>
+
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">HTML file</b><br>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+  <textarea readonly id="sample1" style="width: 100%; float: left; background: #ddd;" rows="2">
+<a type="button" class="btn btn-primary" (click)="addnewdata()" >New data</a>
+</textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component file</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">
+<code>import { NgbModal } from '@ng-bootstrap/ng-bootstrap';</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; ">
+
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>constructor(
+  private modalService: NgbModal,
+) { }
+
+addnewdata() {
+  const modalRef = this.modalService.open(component, { size: 'xl' });
+  modalRef.result.then(() => { console.log('When user closes'); }, () => {
+    this.ngOnInit();
+  });
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; ">
+<b style="width: 100%;">Model Component</b><br>
+<button  onclick="CopyToClipboard('sample4');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample4" class="preclass">
+<code>import { Component, Input } from '@angular/core';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+@Input() name;
+constructor(public activeModal: NgbActiveModal) {}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">Model HTML</b><br>
+<button  onclick="CopyToClipboard('sample5');return false;" style="margin: 10px 0px;"> Copy</button>
+  <textarea readonly id="sample5" style="width: 100%; float: left; background: #ddd;" rows="12">
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>Hello!</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
+</textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

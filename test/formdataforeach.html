@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+      <h5 style="text-align: center;">Form Data foreach<a href="index.html">Back</a></h5>
+      <div style="float: left; width: 98%;">
+         <b style="width: 100%;">Component file</b><br><br>
+         <button  onclick="CopyToClipboard('sample1');return false;"> Copy</button>
+         <pre id="sample1" class="preclass">
+<code>get f() {
+  return this.fileuploadForm.controls;
+}</code></pre>
+      </div>
+      <div style="float: left; width: 98%;">
+         
+         <button  onclick="CopyToClipboard('sample2');return false;"> Copy</button>
+         <pre id="sample2" class="preclass">
+<code>const formData = new FormData();
+Object.keys(this.f).forEach(key => {
+  result[key] = this.f[key].value;
+  if(key != 'fileupload' && key != 'fileSource') {
+    formData.append(key,this.f[key].value);
+  }
+});
+if (this.fileuploadForm.get('fileSource').value != null) {
+  formData.append('fileupload', this.fileuploadForm.get('fileSource').value);
+}</code></pre>
+      </div>
+      
+
+
+      
+      
+      
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

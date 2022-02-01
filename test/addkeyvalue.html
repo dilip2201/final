@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Arrays functions<a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Add key value pair in array</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code>const tasks = data.tasks;
+    var ftasks = tasks.map(function (el) {
+    var o = Object.assign({}, el);
+    o.client_workflow_id = result._id;
+    return o;
+})</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Filter</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">
+<code>const farray = this.finaltaskarray.filter((taskdata) => {
+  return taskdata.task_id != this.settask._id
+})</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

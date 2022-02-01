@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Field Set <a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+  <textarea readonly id="sample1" style="width: 100%; float: left; background: #ddd;" rows="10">
+<div class="col-xl-12">
+    <fieldset>
+        <legend>SVE IN VEST AS</legend>
+        <div class="row">
+            <div class="col-lg-2">
+            </div>
+        </div>
+    </fieldset>
+</div>
+</textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">CSS</b>
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>fieldset {
+    border: 1px solid #ddd !important;
+    margin: 0;
+    
+    padding: 10px;
+    position: relative;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    padding-left: 10px!important;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    width: 100%;
+    color: #000;
+}
+
+legend {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  width: auto;
+  padding-right: 15px!important;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 5px 5px 10px;
+  background-color: #ffffff;
+  color: #000;
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

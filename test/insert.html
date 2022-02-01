@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Bootstrap Model  <a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">Parent Component</b><br>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code>constructor(
+  private fb : FormBuilder,
+  private modalService: NgbModal,
+  private clientservice : ClientService) { }
+
+addWorkflow(){
+  const modalRef = this.modalService.open(AddWorkflowComponent);
+  modalRef.componentInstance.id = '';
+  modalRef.result.then(() => this.workflowtable.fetchData('workflow'), () => { });
+}
+
+edit(workflow: any) {
+  const modalRef = this.modalService.open(AddWorkflowComponent);
+  modalRef.componentInstance.workflow = workflow;
+  modalRef.result.then(() => this.workflowtable.fetchData('workflow'), () => { });
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">WorkflowComponent</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">
+<code>import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { of } from 'rxjs';
+import { WorkflowService } from '../_services/workflow.service';
+
+@Component({
+  selector: 'app-add-workflow',
+  templateUrl: './add-workflow.component.html',
+  styleUrls: ['./add-workflow.component.scss']
+})
+export class AddWorkflowComponent implements OnInit {
+  
+  workform: FormGroup;
+  submitted: boolean = false;
+  isdisabled: boolean = false;
+  isAddMode: boolean;
+  isLoading$;
+  @Input() workflow;
+  
+  constructor(public activeModal: NgbActiveModal, 
+    private fb: FormBuilder,
+    private workflowservice:WorkflowService,
+    private toastr: ToastrService
+    ) {}
+
+  ngOnInit(): void {
+    this.isAddMode = !this.workflow;
+    this.initForm();
+    this.isLoading$ = this.workflowservice.isLoading$;
+  }
+
+  initForm() {
+    this.workform = this.fb.group({
+      title : ['', Validators.compose([Validators.required,Validators.minLength(3),Validators.maxLength(100)])],
+    });
+    if (!this.isAddMode) {
+        return this.workform.patchValue(this.workflow)
+    }
+  }
+
+  get f() {
+    return this.workform.controls;
+  }
+
+
+  submit() {
+    this.submitted = true;
+    if (this.workform.valid) {
+      const result = {};
+      Object.keys(this.f).forEach(key => {
+        if(this.f[key].value != '') {
+          console.log(this.f[key].value);
+          result[key] = this.f[key].value;
+        } else {
+          console.log('key:'+key);
+          result[key] = false;
+        }
+      });
+      
+      this.isdisabled = true;
+      if (this.isAddMode) {
+        this.createworkflow(result);
+      } else {
+        this.edittask(result);
+      }
+    }
+  }
+
+
+  edittask(result) {
+    let submitonboarding = this.workflowservice.update(result, this.workflow._id)
+    .subscribe((data: any) => {
+      this.toastr.success("WorkFlow Updated Successfully.", 'Success', {
+        positionClass: 'toast-top-right'
+      });
+      this.activeModal.close()
+      this.activeModal.dismiss();
+      return of(undefined);
+    }, err => {
+      this.toastr.error(err.error.message, 'Error', {
+        positionClass: 'toast-top-right'
+      });
+    });
+  }
+
+
+  createworkflow(result) {
+    let submitonboarding = this.workflowservice.insert(result)
+    .subscribe((data: any) => {
+      this.toastr.success("WorkFlow Added Successfully.", 'Success', {
+        positionClass: 'toast-top-right'
+      });
+      this.activeModal.close()
+      this.activeModal.dismiss();
+      return of(undefined);
+    }, err => {
+      this.toastr.error(err.error.message, 'Error', {
+        positionClass: 'toast-top-right'
+      });
+    });
+  }
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; ">
+
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>constructor(
+  private modalService: NgbModal,
+) { }
+
+addnewdata() {
+  const modalRef = this.modalService.open(component, { size: 'xl' });
+  modalRef.result.then(() => { console.log('When user closes'); }, () => {
+    this.ngOnInit();
+  });
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">Model HTMl file</b><br>
+<button  onclick="CopyToClipboard('sample3');return false;"> Copy</button>
+<textarea readonly id="sample3" style="width: 100%; float: left; background: #ddd;" rows="37">
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title h4" id="example-modal-sizes-title-lg">
+            <span *ngIf="isAddMode">Create Workflow</span>
+            <span *ngIf="!isAddMode">Update Workflow</span>
+            
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss()">
+            <i aria-hidden="true" class="ki ki-close"></i>
+        </button>
+    </div>
+    <form action="#" class="form form-label-right" [formGroup]="workform" (ngSubmit)="submit()">
+    <div class="modal-body">
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control form-control-lg form-control-solid" 
+                        placeholder="Title" autocomplete="off" [ngClass]="{'is-invalid' : submitted && workform.get('title').errors && 
+                        workform.get('title').hasError('required')}" formControlName="title" />
+                    <span class="text-danger" *ngIf="submitted && workform.get('title').errors && 
+                    workform.get('title').hasError('required')"> Title is required</span>
+                    <span class="text-danger" *ngIf="submitted && workform.get('title').errors && 
+                    workform.get('title').hasError('minlength')">Title should be more than 3
+                            character.</span>
+                    <span class="text-danger" *ngIf="submitted && workform.get('title').errors && 
+                    workform.get('title').hasError('maxlength')">Title shouldn't be more than 50
+                            character.</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light btn-elevate mr-2" (click)="activeModal.dismiss()">Cancel</button>
+            <button type="submit" class="ml-1 btn btn-primary"><span *ngIf="isAddMode">Add Workflow</span>
+                <span *ngIf="!isAddMode">Update Workflow</span> <i class="fa fa-spinner fa-spin" *ngIf="isLoading$ | async"></i></button>
+        </div>
+    </form>
+</div></textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; ">
+
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WorkflowService {
+
+  private _isLoading$ = new BehaviorSubject(false);
+  private unsubscribe: Subscription[] = [];
+  private apiUrl = environment.apiUrl;
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  get isLoading$() {
+    return this._isLoading$.asObservable();
+  }
+
+  insert(result) {
+    this._isLoading$.next(true);
+    return this.http.post(`${this.apiUrl}/workflow/create`, result).pipe(
+      finalize(() => {
+        this._isLoading$.next(false)
+      })
+    );
+  }
+
+  update(task: any, id) {
+    this._isLoading$.next(true);
+    return this.http.post(`${this.apiUrl}/workflow/update/${id}`, task).pipe(
+      finalize(() => {
+        this._isLoading$.next(false)
+      })
+    );
+  }
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

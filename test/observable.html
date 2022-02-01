@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+   	  <h5 style="text-align: center;">Spinner Observable <a href="index.html">Back</a></h5>
+      <div style="float: left; width: 98%;">
+         <b style="width: 100%;">Service ts</b><br><br>
+         <button  onclick="CopyToClipboard('sample');return false;"> Copy</button>
+         <pre id="sample" class="preclass">
+<code>import { BehaviorSubject } from "rxjs";</code></pre>
+      </div>
+      <div style="float: left; width: 98%;">
+         <button  onclick="CopyToClipboard('sample2');return false;"> Copy</button>
+         <pre id="sample2" class="preclass">
+<code>private _isLoading$ = new BehaviorSubject<boolean>(false);
+
+get isLoading$() {
+	return this._isLoading$.asObservable();
+}
+
+create(data){
+    this._isLoading$.next(true);
+    return this.http.post(`${this.apiUrl}/tasks/create`, data).pipe(
+        finalize(()=>{
+            this._isLoading$.next(false)
+        })
+    );
+}
+</code></pre>
+      </div>
+      
+      <div style="float: left; width: 98%;">
+         <b style="width: 100%;">Component file</b><br><br>
+         <button  onclick="CopyToClipboard('sample4');return false;"> Copy</button>
+         <pre id="sample4" class="preclass">
+<code>isLoading$;
+ngOnInit(): void {
+	this.isLoading$ = this.service.isLoading$;
+}
+</code></pre>
+      </div>
+<div style="float: left; width: 98%;">
+         <b style="width: 100%;">HTML </b><br>
+         <button  onclick="CopyToClipboard('sample5');return false;"> Copy</button>
+         
+  <textarea readonly id="sample5" style="width: 100%; float: left; background: #ddd;" rows="3">
+<i class="fa fa-spinner fa-spin" *ngIf="isLoading$ | async"></i></textarea>
+</div>
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Change Detector Ref<a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component file</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code> constructor(
+    public dialog: MatDialog,
+) { }</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component file</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">
+<code>const dialogRef = this.dialog.open(DialogeComponent, {
+  width: '20%',
+  maxHeight: '90vh',
+  data: { time: this.time, every_month: this.every_month, end_date: this.end_date }
+});
+dialogRef.afterClosed().subscribe(result => {
+  this.time = result.time;
+  this.every_month = result.every_month;
+  this.end_date = result.end_date;
+  
+});</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">DialogeComponent file</b>
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>constructor(private fb: FormBuilder,
+public dialogRef: MatDialogRef<any>,
+@Inject(MAT_DIALOG_DATA) public data: any) { }
+
+ngOnInit(): void {
+  this.data;
+}
+
+save(){
+  this.dialogRef.close(this.recurring.value);
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

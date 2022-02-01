@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+   	  <h5 style="text-align: center;">Fix button on scroll <a href="index.html">Back</a></h5>
+      <div style="float: left; width: 98%;">
+         <b style="width: 100%;">Component file</b><br><br>
+         <button  onclick="CopyToClipboard('sample1');return false;"> Copy</button>
+         <pre id="sample1" class="preclass">
+<code>import { HostListener } from '@angular/core';</code></pre>
+      </div>
+      <div style="float: left; width: 98%;">
+         
+         <button  onclick="CopyToClipboard('sample2');return false;"> Copy</button>
+         <pre id="sample2" class="preclass">
+<code>at_bottom: boolean = true;
+
+@HostListener("window:scroll", [])
+
+onScroll(): void {
+  const triggerAt: number = 130;
+  if (document.body.scrollHeight - (window.innerHeight + window.scrollY) <= triggerAt) {
+    this.at_bottom = false;
+  } else {
+    this.at_bottom = true;
+  }
+}</code></pre>
+      </div>
+      <div style="float: left; width: 98%;">
+         <b style="width: 100%;">HTML file</b><br>
+         <button  onclick="CopyToClipboard('sample3');return false;"> Copy</button>
+         
+  <textarea readonly id="sample3" style="width: 100%; float: left; background: #ddd;" rows="20">
+<div class="col-sm-12" *ngIf="!at_bottom">
+    <div class="form-group">
+        <button type="submit"
+            class="btn btn-sm btn-primary  float-right tasksubmitbutton margintop"
+            [disabled]="isdisabled">
+            <span *ngIf="isAddMode">Add Task</span>
+            <span *ngIf="!isAddMode">Update Task</span> <i class="fa fa-spinner fa-spin "
+                *ngIf="isLoading$ | async"></i></button>
+    </div>
+</div>
+
+<div class="float-save show" *ngIf="at_bottom">
+    <div class="col-sm-12">
+        <button type="submit" class="btn btn-sm btn-primary float-right tasksubmitbutton"
+            [disabled]="isdisabled">
+            <span *ngIf="isAddMode">Add Task</span>
+            <span *ngIf="!isAddMode">Update Task</span> <i class="fa fa-spinner fa-spin "
+                *ngIf="isLoading$ | async"></i></button>
+    </div>
+</div></textarea>
+      </div>
+
+
+      <div style="float: left; width: 98%;">
+         <b style="width: 100%;">Style file</b><br>
+         <button  onclick="CopyToClipboard('sample4');return false;"> Copy</button>
+         
+<pre id="sample4" class="preclass">
+<code>.float-save.show {
+    bottom: 0px;
+}
+
+.float-save {
+    z-index: 900001;
+}
+
+.float-save {
+    position: fixed;
+    bottom: -100px;
+    width: 100%;
+    background: #ffffff;
+    left: 0;
+    padding: 15px;
+    padding-bottom: 0;
+    box-shadow: 0 0px 24px 0 rgb(0 0 0 / 6%), 0 1px 0px 0 rgb(0 0 0 / 2%);
+    z-index: 100;
+    transition: bottom 0.2s linear;
+}</code></pre>
+      </div>
+      
+      
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

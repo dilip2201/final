@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;"> Parent Child tree <a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component file</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code>var dataFromAPI = [
+    {id: 1, name: 'sensor'},
+    {id: 2, name: 'sensor', parent: 1},
+    {id: 3, name: 'sensor', parent: 1},
+    {id: 4, name: 'sensor', parent: 3},
+    {id: 5, name: 'sensor'},
+    {id: 6, name: 'sensor', parent: 5}
+];
+
+
+var transformedData = { };
+
+dataFromAPI.forEach(function(entry){
+
+    if(entry.parent !== undefined && entry.parent in transformedData) {
+       transformedData[entry.parent].children.push(entry);
+    } else {
+        entry["children"] = [];
+        transformedData[entry.id] = entry;
+    }
+});
+
+console.log(transformedData);
+
+
+
+const ftasks = tasks.data;
+let parent = ftasks.filter(x => !x.parentid)
+let child = ftasks.filter(x => x.parentid)
+let filter = parent.map(x => {
+  x['children'] = []
+  let ind = child.map(y => {
+    if(y.parentid == x._id) {
+      x['children'].push(y)
+    }
+  });
+  return {...x}
+})
+
+this.tasks = [...filter]</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component file</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">
+<code>const flat = [
+  { id: 1, parentId: 3 },
+  { id: 3, parentId: 8 },
+  { id: 4, parentId: 6 },
+  { id: 6, parentId: 3 },
+  { id: 7, parentId: 6 },
+  { id: 8, parentId: null },
+  { id: 10, parentId: 8 }, 
+  { id: 13, parentId: 14 },
+  { id: 14, parentId: 10 }
+]
+
+[
+  { 
+    id: 8,
+    children: [
+      { 
+        id: 3, 
+        children: [
+          { 
+            id: 1, 
+            children: [] 
+          }, 
+          { 
+            id: 6, 
+            children: [ 
+              { id: 4, children: [] }, 
+              { id: 7, children: [] } 
+            ]
+          }
+        ] 
+      },
+      { 
+        id: 10, 
+        children: [ 
+          { 
+            id: 14, 
+            children: [
+              { id: 13, children: [] }
+            ] 
+          }
+        ]
+      }
+    ]
+  }
+]
+
+
+const flat = [
+  { id: 1, parentId: 3 },
+  { id: 3, parentId: 8 },
+  { id: 4, parentId: 6 },
+  { id: 6, parentId: 3 },
+  { id: 7, parentId: 6 },
+  { id: 8, parentId: null },
+  { id: 10, parentId: 8 }, 
+  { id: 13, parentId: 14 },
+  { id: 14, parentId: 10 }
+]
+
+// Create root for top-level node(s)
+const root = [];
+
+flat.forEach(node => {
+  // No parentId means top level
+  if (!node.parentId) return root.push(node);
+  
+  // Insert node as child of parent in flat array
+  const parentIndex = flat.findIndex(el => el.id === node.parentId);
+  if (!flat[parentIndex].children) {
+    return flat[parentIndex].children = [node];
+  }
+  
+  flat[parentIndex].children.push(node);
+});
+
+console.log(root);</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

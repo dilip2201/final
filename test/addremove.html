@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Get Id from URL <a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component file</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code>import { Component } from '@angular/core';
+import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms'
+  
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent  {
+  name = 'Angular';
+  
+  productForm: FormGroup;
+   
+  constructor(private fb:FormBuilder) {
+   
+    this.productForm = this.fb.group({
+      name: '',
+      quantities: this.fb.array([]) ,
+    });
+  }
+  
+  quantities() : FormArray {
+    return this.productForm.get("quantities") as FormArray
+  }
+   
+  newQuantity(): FormGroup {
+    return this.fb.group({
+      qty: '',
+      price: '',
+    })
+  }
+   
+  addQuantity() {
+    this.quantities().push(this.newQuantity());
+  }
+
+  patchformvalue() {
+    this.productForm.setValue({
+      name: 'test',
+      quantities: [],
+    });
+
+    const quantities = current.quantities;
+    const formArray = new FormArray([]);
+    for (let x of quantities) {
+      formArray.push(this.fb.group({
+          qty: x.qty,
+          price: x.price,
+      }));
+    }
+    this.taskformarray.setControl('quantities', formArray);
+  }
+   
+  clearFormArray() {
+    this.quantities().clear();
+  }
+
+  removeQuantity(i:number) {
+    this.quantities().removeAt(i);
+  }
+   
+  onSubmit() {
+    console.log(this.productForm.value);
+  }
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">HTML file</b><br>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+  <textarea readonly id="sample1" style="width: 100%; float: left; background: #ddd;" rows="30">
+<div class="container">
+  <h1>Angular FormArray Example - ItSolutionStuff.com</h1>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">    
+    <p>
+      <label for="name">Product Name:</label>
+      <input type="text" id="name" name="name" formControlName="name" class="form-control">
+    </p>  
+    <table class="table table-bordered" formArrayName="quantities">
+      <tr>
+        <th colspan="2">Add Multiple Quantity:</th>
+        <th width="150px"><button type="button" (click)="addQuantity()" class="btn btn-primary">Add More</button></th>
+      </tr>
+      <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+        <td>
+            Quantity :
+            <input type="text" formControlName="qty" class="form-control">
+        </td>
+        <td>
+            Price:
+            <input type="text" formControlName="price" class="form-control">
+        </td>
+        <td>
+            <button (click)="removeQuantity(i)" class="btn btn-danger">Remove</button>
+        </td>
+      </tr>
+    </table>   
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+  <br/>
+  {{this.productForm.value | json}}
+</div>
+</textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

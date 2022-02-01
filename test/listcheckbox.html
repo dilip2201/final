@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Disable dropdown if selected  <a href="index.html">Back</a></h5>
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">Model HTMl file</b><br>
+<button  onclick="CopyToClipboard('sample3');return false;"> Copy</button>
+<textarea readonly id="sample3" style="width: 100%; float: left; background: #ddd;" rows="29">
+<form class="form">
+    <ul class="list-group">
+        <li class="list-group">
+            <input type="text" class="form-control" placeholder="Search Task" (keyup)="searchtask($event)">
+        </li>
+    </ul>
+    <ul class="list-group">
+        <li class="list-group-item" for="selectall">
+            <label  for="selectall" class="checkbox checkbox-single ml-0">
+            <input type="checkbox" id="selectall" [(ngModel)]="selectedAll" (change)="selectAll();" name="list_name"
+                value="h1" />
+                <span></span> &nbsp; <strong>Select All / Unselect All</strong>
+            </label>
+            
+        </li>
+    </ul>
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of categoryList">
+
+            <label for="test{{item._id}}" class="checkbox checkbox-single ml-0"><input type="checkbox" id="test{{item._id}}" [(ngModel)]="item.isSelected" name="list_name"
+                value="{{item._id}}" />
+                <span></span> &nbsp; {{item.title}} &nbsp; <i class="fa fa-info-circle" placement="top" ngbTooltip="{{item.description}}"></i>
+            </label>
+
+            
+            
+        </li>
+    </ul>
+</form></textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; ">
+
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">
+<code>
+categoryList: any;
+selectedAll: any;
+
+fetchtasks(search = "") {
+  this.workflowservice.getalltask(this.data.workflowid, this.data.taskid, search).subscribe((tasks: any) => {
+    this.cd.markForCheck();
+    if (tasks.data.length) {
+      var result = tasks.data.map(function (el) {
+        var o = Object.assign({}, el);
+        o.isSelected = false;
+        return o;
+      })
+      this.categoryList = result;
+    }
+  });
+}
+
+
+selectAll() {
+  for (var i = 0; i < this.categoryList.length; i++) {
+    this.categoryList[i].isSelected = this.selectedAll;
+  }
+}
+
+
+checkIfAllSelected() {
+  this.selectedAll = this.categoryList.every(function (item: any) {
+    return item.isSelected == true;
+  })
+}
+</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

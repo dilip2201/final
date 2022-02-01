@@ -1,0 +1,52 @@
+.post-description p strong.step {
+    color: #1e5792;
+    border-left: 14px solid #1e5792!important;
+    border-radius: 6px;
+    border-color: #ececec;
+    border-right: 1px solid #ececec;
+    padding-left: 20px;
+    font-size: 22px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 500;
+    margin-top: 15px;
+    width: 75%;
+    float: left;
+}
+li {
+    width: 20%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+li a{
+    border: none;
+    text-decoration: none;
+}
+body{
+  font-family: Arial, Helvetica, sans-serif;
+}
+.step {
+    border-left: 10px solid #23527c;
+    border-top: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
+    border-right: : 1px solid #ececec;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 7px;
+    width: 100%;
+}
+
+.post-description{
+    float: left;
+    width: 100%;
+
+}
+
+.preclass{
+    width: 100%;    
+    float: left;    
+    background: #2c2c2c;    
+    color: #fff;    
+    padding: 15px;
+}

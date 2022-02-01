@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Http interceptors <a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Module file</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code>providers: [
+  {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AuthInterceptor, 
+      multi: true
+  },
+]</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">auth-interceptor.ts file</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">
+<code>import { Injectable } from "@angular/core";
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpErrorResponse,
+} from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { AuthService } from "../modules/auth";
+import { EasyGoService } from "../easy-go/easy-go.service";
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private easygoService: EasyGoService
+  ) { }
+
+  intercept(
+    req: HttpRequest &lt;any&gt;,
+    next: HttpHandler
+  ): Observable &lt;HttpEvent&lt;any&gt;&gt; {
+    const token = localStorage.getItem('token');
+    const authReq = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${token}`)
+    });
+    return next.handle(authReq).pipe(
+      catchError((err) => {
+        console.log('Err :: ', err)
+        if (err instanceof HttpErrorResponse) {
+          console.log({ err })
+          // Check for unauthorized user
+          if (err.status == 401) {
+            this.authService.currentUserSubject.next(undefined);
+            this.router.navigate(['/auth/login']);
+          }
+          this.easygoService.errorMessage = err.error?.message ?? 'Something went wrong';
+          return throwError(err)
+        } else {
+          console.log('Client error')
+        }
+      })
+    )
+  }
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

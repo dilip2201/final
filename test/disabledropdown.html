@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Arrays functions<a href="index.html">Back</a></h5>
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Disable dropdown if selected</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">
+<code>
+assignedlist : any = [];
+
+assignedarray(i,event){
+  this.assignedlist[i] = event.target.value;
+}
+
+isDisabled(i,value) {
+  if(this.assignedlist[i] !== undefined && this.assignedlist[i] == value){
+    return false;
+  }else{
+    return this.assignedlist.includes(value);
+  }
+}
+
+
+patchformvalue() {
+  this.assignedlist = [];
+  for (let x in emails) {
+      let email = emails[x];
+      this.assignedlist[x] = email.changed_status;
+  }
+}</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%;">
+<b style="width: 100%;">Model HTMl file</b><br>
+<button  onclick="CopyToClipboard('sample3');return false;"> Copy</button>
+<textarea readonly id="sample3" style="width: 100%; float: left; background: #ddd;" rows="7">
+<select class="form-control"  (change)="assignedarray(i,$event)"  formControlName="changed_status">
+    <option value="not_started" [disabled]="isDisabled(i,'not_started')">Not Started</option>
+    <option value="in_progress"  [disabled]="isDisabled(i,'in_progress')" >In progress</option>
+    <option value="waiting_on_client" [disabled]="isDisabled(i,'waiting_on_client')" >Waiting On client</option>
+    <option value="on_hold" [disabled]="isDisabled(i,'on_hold')" >On Hold</option>
+    <option value="completed" [disabled]="isDisabled(i,'completed')" >Completed</option>
+</select>
+</textarea>
+</div>
+<!------------------ DIV --------------------------->
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>

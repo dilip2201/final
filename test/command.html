@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+   </head>
+   <body>
+<h5 style="text-align: center;">Comands  <a href="index.html">Back</a></h5>
+
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">ng cli</b>
+<button  onclick="CopyToClipboard('sample1');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample1" class="preclass">npm install -g @angular/cli</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">new project</b>
+<button  onclick="CopyToClipboard('sample2');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample2" class="preclass">ng new my-first-project
+cd my-first-project
+ng serve</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Component</b>
+<button  onclick="CopyToClipboard('sample3');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample3" class="preclass">ng g c --skip-tests=true componentname</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Module</b>
+<button  onclick="CopyToClipboard('sample4');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample4" class="preclass">ng g m foldername --routing</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Service</b>
+<button  onclick="CopyToClipboard('sample5');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample5" class="preclass">ng g service --skip-tests=true servicename</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+<!------------------ DIV --------------------------->
+<div style="float: left; width: 98%; margin-top: 10px;">
+<b style="width: 100%; ">Build</b>
+<button  onclick="CopyToClipboard('sample6');return false;" style="margin: 10px 0px 0px 0px;"> Copy</button>
+<pre id="sample6" class="preclass">ng build --configuration production --base-href /foldername/</code></pre>
+</div>
+<!------------------ DIV --------------------------->
+
+
+   </body>
+   <script>
+      function CopyToClipboard(id)
+      {
+      var r = document.createRange();
+      r.selectNode(document.getElementById(id));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(r);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      }
+   </script>
+</html>
